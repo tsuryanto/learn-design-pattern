@@ -5,6 +5,7 @@ import (
 	absfactory "learndesignpattern/abstract_factory"
 	"learndesignpattern/builder"
 	"learndesignpattern/factory"
+	"learndesignpattern/prototype/document"
 	"testing"
 )
 
@@ -39,4 +40,17 @@ func TestBuilder(t *testing.T) {
 	}
 
 	fmt.Println(house)
+}
+
+func TestPrototype(t *testing.T) {
+	myPhoneBook := document.NewPhoneBook("Taufiq")
+	copyPhoneBook := myPhoneBook.Clone()
+
+	humairaPhoneBook, ok := copyPhoneBook.(*document.PhoneBook)
+	if ok {
+		humairaPhoneBook.BookOwner = "Humaira"
+	}
+
+	myPhoneBook.Print()
+	humairaPhoneBook.Print()
 }
