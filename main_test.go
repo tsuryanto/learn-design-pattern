@@ -6,6 +6,7 @@ import (
 	"learndesignpattern/builder"
 	"learndesignpattern/factory"
 	"learndesignpattern/prototype/document"
+	"learndesignpattern/singleton"
 	"testing"
 )
 
@@ -53,4 +54,14 @@ func TestPrototype(t *testing.T) {
 
 	myPhoneBook.Print()
 	humairaPhoneBook.Print()
+}
+
+func TestSingleton(t *testing.T) {
+	dbWithLock := singleton.GetDBInsstanceWithLock()
+	fmt.Println(*dbWithLock) // set instance, reeturn instance
+	fmt.Println(*dbWithLock) // return instance only
+
+	elastic := singleton.GetElasticInstanceWithOnce()
+	fmt.Println(*elastic) // set instance, reeturn instance
+	fmt.Println(*elastic) // return instance only
 }
