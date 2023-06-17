@@ -3,6 +3,7 @@ package main_test
 import (
 	"fmt"
 	absfactory "learndesignpattern/abstract_factory"
+	"learndesignpattern/adapter"
 	"learndesignpattern/builder"
 	"learndesignpattern/factory"
 	"learndesignpattern/prototype/document"
@@ -64,4 +65,27 @@ func TestSingleton(t *testing.T) {
 	elastic := singleton.GetElasticInstanceWithOnce()
 	fmt.Println(*elastic) // set instance, reeturn instance
 	fmt.Println(*elastic) // return instance only
+}
+
+func TestAdapter(t *testing.T) {
+	// laoptop with HDMI Port only
+	myLaptop := adapter.AcerSwift{}
+	myOldLaptop := adapter.Thinkbook{}
+
+	monitor := adapter.Monitor{}
+	projector := adapter.Infocus{}
+
+	// my laptop connect to monitor
+	monitor.OpenHdmiPort(myLaptop)
+
+	// my laptop connect to projector
+	projectorHdmiAdapter := adapter.NewVGAPortToHdmiPortAdapter(projector)
+	projectorHdmiAdapter.OpenHdmiPort(myLaptop)
+
+	// my old laptop connecto to projector
+	projector.OpenVgaPort(myOldLaptop)
+
+	// my old laptop to monitor
+	myOldLaptopHdmiAdapter := adapter.NewVGAConnectorToHdmiConnectorAdapter(myOldLaptop)
+	monitor.OpenHdmiPort(myOldLaptopHdmiAdapter)
 }
