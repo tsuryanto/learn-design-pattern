@@ -4,6 +4,7 @@ import (
 	"fmt"
 	absfactory "learndesignpattern/abstract_factory"
 	"learndesignpattern/adapter"
+	"learndesignpattern/bridge"
 	"learndesignpattern/builder"
 	"learndesignpattern/factory"
 	"learndesignpattern/prototype/document"
@@ -88,4 +89,30 @@ func TestAdapter(t *testing.T) {
 	// my old laptop to monitor
 	myOldLaptopHdmiAdapter := adapter.NewVGAConnectorToHdmiConnectorAdapter(myOldLaptop)
 	monitor.OpenHdmiPort(myOldLaptopHdmiAdapter)
+}
+
+func TestBridge(t *testing.T) {
+	clockGreen := bridge.Cycle{
+		Radius: 7,
+		Color:  bridge.Green{},
+	}
+
+	tissueRed := bridge.Rectangle{
+		SideLength: 10,
+		Color:      bridge.Red{},
+	}
+
+	fmt.Println("Area :", clockGreen.Area())
+	fmt.Println("Area :", tissueRed.Area())
+
+	clockGreen.Draw()
+	tissueRed.Draw()
+
+	clockRed := clockGreen
+	clockRed.Color = bridge.Red{}
+	clockRed.Draw()
+
+	tissueGreen := tissueRed
+	tissueGreen.Color = bridge.Green{}
+	tissueGreen.Draw()
 }
